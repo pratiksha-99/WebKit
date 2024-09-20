@@ -275,13 +275,6 @@
    },
    {
       "emails" : [
-         "p_choudhury@apple.com"
-      ],
-      "github" : "pratiksha-99",
-      "name" : "Pratiksha Choudhury"
-   },
-   {
-      "emails" : [
          "zalan@apple.com",
          "zbujtas@gmail.com"
       ],
@@ -6595,6 +6588,13 @@
       "nicks" : [
          "psolanki"
       ]
+   },
+   {
+      "emails" : [
+         "p_choudhury@apple.com"
+      ],
+      "github" : "pratiksha-99",
+      "name" : "Pratiksha Choudhury"
    },
    {
       "emails" : [
