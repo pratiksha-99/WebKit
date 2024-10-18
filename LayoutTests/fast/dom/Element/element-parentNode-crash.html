@@ -1,0 +1,49 @@
+<style></style>
+<p>This test passes if WebKit does not crash.</p>
+<script>
+const nodes = new Map([['n0', new WeakRef(document.documentElement)]]);
+
+function storeNode(key, node) {
+    nodes.set(key, new WeakRef(node));
+}
+
+function getNodeSafe(key) {
+    const weak = nodes.get(key);
+    return weak ? weak.deref() : null;
+}
+
+if (window.testRunner) {
+        testRunner.dumpAsText();
+        testRunner.waitUntilDone();
+    }
+
+(async () => {
+    let ss0 = document.styleSheets[0];
+    let sr0 = ss0.rules;
+
+    try {
+        ss0?.insertRule(`@layer { .c1:nth-last-child(6n-2 of :popover-open) { }`, sr0?.length);
+
+        const mathElement = document.createElementNS('http://www.w3.org/1998/Math/MathML', 'p0:math');
+        storeNode('n16', mathElement);
+
+        const iframeElement = document.createElementNS('http://www.w3.org/1999/xhtml', 'iframe');
+        (document.body ?? document.documentElement).prepend(iframeElement);
+        storeNode('n18', iframeElement);
+
+        const pictureElement = document.createElementNS('http://www.w3.org/1999/xhtml', 'picture');
+        getNodeSafe('n18').prepend(pictureElement);
+        storeNode('n33', pictureElement);
+
+        const imgElement = document.createElement('img');
+        getNodeSafe('n33').append(imgElement);
+        storeNode('n54', imgElement);
+        imgElement.popover = `\u{1fa89}\u0e93\uc59d\u{1fd3e}\u1bb6\u0c41\u{1f8b6}`;
+
+        getNodeSafe('n16').getBoundingClientRect();
+        getNodeSafe('n54').showPopover();
+        getNodeSafe('n33').innerHTML = '';
+    } catch {}
+    globalThis.testRunner?.notifyDone();
+})();
+</script>
