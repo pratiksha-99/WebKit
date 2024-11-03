@@ -293,6 +293,13 @@ bool NetworkConnectionToWebProcess::dispatchMessage(IPC::Connection& connection,
         return true;
     }
     
+#if ENABLE(IPC_TESTING_API)
+    if (decoder.messageReceiverName() == Messages::IPCTester::messageReceiverName()) {
+        m_ipcTester.didReceiveMessage(connection, decoder);
+        return true;
+    }
+#endif
+    
     if (decoder.messageReceiverName() == Messages::WebSWServerConnection::messageReceiverName()) {
         if (m_swConnection)
             m_swConnection->didReceiveMessage(connection, decoder);
@@ -329,12 +336,12 @@ bool NetworkConnectionToWebProcess::dispatchMessage(IPC::Connection& connection,
     }
 #endif
 
-#if ENABLE(IPC_TESTING_API)
-    if (decoder.messageReceiverName() == Messages::IPCTester::messageReceiverName()) {
-        m_ipcTester.didReceiveMessage(connection, decoder);
-        return true;
-    }
-#endif
+//#if ENABLE(IPC_TESTING_API)
+//    if (decoder.messageReceiverName() == Messages::IPCTester::messageReceiverName()) {
+//        m_ipcTester.didReceiveMessage(connection, decoder);
+//        return true;
+//    }
+//#endif
     return false;
 }
 
