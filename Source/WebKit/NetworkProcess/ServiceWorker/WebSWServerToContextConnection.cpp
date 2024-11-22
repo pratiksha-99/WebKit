@@ -352,7 +352,7 @@ void WebSWServerToContextConnection::startFetch(ServiceWorkerFetchTask& task)
 }
 
 void WebSWServerToContextConnection::didReceiveFetchTaskMessage(IPC::Connection& connection, IPC::Decoder& decoder)
-{
+{//FIX
     RefPtr fetch = m_ongoingFetches.get(ObjectIdentifier<FetchIdentifierType>(decoder.destinationID())).get();
     if (!fetch)
         return;

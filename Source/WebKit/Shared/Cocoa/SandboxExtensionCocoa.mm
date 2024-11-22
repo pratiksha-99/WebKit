@@ -65,6 +65,8 @@ SandboxExtensionImpl::~SandboxExtensionImpl()
 
 bool WARN_UNUSED_RETURN SandboxExtensionImpl::consume()
 {
+    ASSERT(m_token);
+    ASSERT(strlen(m_token));
     m_handle = sandbox_extension_consume(m_token);
 #if PLATFORM(IOS_FAMILY_SIMULATOR)
     return !sandbox_check(getpid(), 0, SANDBOX_FILTER_NONE);
