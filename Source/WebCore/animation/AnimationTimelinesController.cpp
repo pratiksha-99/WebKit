@@ -301,9 +301,12 @@ void AnimationTimelinesController::cacheCurrentTime(ReducedResolutionSeconds new
     }
     // We extent the associated Document's lifecycle until the VM became idle since the AnimationTimelinesController
     // is owned by the Document.
-    m_document.vm().whenIdle([this, protectedDocument = Ref { m_document }]() {
-        m_waitingOnVMIdle = false;
-        maybeClearCachedCurrentTime();
+    m_document.vm().whenIdle([protectedDocument = Ref { m_document }, checkedThis = CheckedPtr<AnimationTimelinesController> { this }] () {
+        // Use CheckedPtr to ensure the object is still valid
+        if (checkedThis) {
+            checkedThis->m_waitingOnVMIdle = false;
+            checkedThis->maybeClearCachedCurrentTime();
+        }
     });
 }
 
